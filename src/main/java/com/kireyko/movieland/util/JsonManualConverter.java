@@ -17,6 +17,28 @@ public class JsonManualConverter {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
 
+    /*        StringBuilder sb = new StringBuilder();
+        if(null !=movies && movies.size()>0){
+
+            for (Movie movie: movies){
+                Object[] movieFieldsShort = {
+                        movie.getId(), movie.getMoviename(), movie.getMovienameorig(), movie.getYear(),  movie.getPrice(),movie.getRating(), movie.getPoster()
+                };
+                if (sb.length() !=0) {
+                    sb.append(",");
+                    sb.append(LINE_SEPARATOR);
+                } else{
+                    sb.append("[");
+                    sb.append(LINE_SEPARATOR);
+                }
+                moviesAllJson = jsonConverter.toJson( movieFieldNamesShort, movieFieldsShort );
+                sb.append(moviesAllJson);
+            }
+            sb.append(LINE_SEPARATOR);
+            sb.append("]");
+        }
+        */
+
        public String toJson(String[] fieldNames, Object[] fieldObjects ) {
         StringBuilder json = new StringBuilder();
 

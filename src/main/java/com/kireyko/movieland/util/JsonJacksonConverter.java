@@ -12,33 +12,23 @@ import java.io.IOException;
 @Service
 public class JsonJacksonConverter {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    // thread-safe
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public <T> String parseEntityToJson(T entity) {
         log.info("Start parsing entity to json {}", entity);
         long startTime = System.currentTimeMillis();
-
         String entityJson = null;
-        try {
-            entityJson = objectMapper.writeValueAsString(entity);
-        }
-        catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        long time = System.currentTimeMillis() - startTime;
-        log.info("Entity {} is received. It took {} ms", entity, time);
+        try { entityJson = objectMapper.writeValueAsString(entity);  }
+        catch (JsonProcessingException e) { e.printStackTrace(); }
+        log.info("Entity {} is received. It took {} ms", entity, System.currentTimeMillis() - startTime);
         return entityJson;
     }
-
-    public Movie parseJsonToMovie(String json) {
-        log.info("Start parsing movie from json {}", json);
+/*
+    public Movie parseJsonToEntity(String json) {
+        log.info("Start parsing entity from json {}", json);
         long startTime = System.currentTimeMillis();
-
         Movie movie = parseValue(json, Movie.class);
-        long time = System.currentTimeMillis() - startTime;
-        log.info("Movie {} is received. It took {} ms", movie, time);
+        log.info("Movie {} is received. It took {} ms", movie, System.currentTimeMillis() - startTime);
         return movie;
     }
 
@@ -49,4 +39,5 @@ public class JsonJacksonConverter {
             throw new RuntimeException(e);
         }
     }
+*/
 }

@@ -16,23 +16,23 @@ public class MovieServiceImpl  implements MovieService{
     private MovieDao movieDao;
 
     @Override
-    public Movie getById(int id) {
-        return movieDao.getById(id);
-    }
-    @Override
-    public List<Movie> getMoviesAll(){
+    public List<Movie> getMoviesAll() {
         return movieDao.getMoviesAll();
     }
+
     @Override
-    public List<Movie> getMoviesRandom(){
+    public List<Movie> getMoviesRandom() {
         return movieDao.getMoviesRandom();
     }
 
+    //    @Override
+    //    public Movie getById(int id) {
+    //        return movieDao.getById(id);
+    //    }
 
-    @Override
-    public void add(Movie movie) {
-        movieDao.add(movie);
-    }
+
+
+
 
 }
 

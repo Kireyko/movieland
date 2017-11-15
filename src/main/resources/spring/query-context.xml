@@ -28,32 +28,42 @@
     </bean>
 
     <bean id="getMoviesAllSQL" class="java.lang.String">
-        <!--<constructor-arg value="select id, MOVIENAME, MOVIENAMEORIG, YEAR, COUNTRY, DESCRIPTION, RATING, PRICE from movieland.movies  ;"/>-->
-        <constructor-arg value="select  m.id, m.MOVIENAME, m.MOVIENAMEORIG, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
-                                from 	movies m,
-                                        posters p
-                                where 1=1
-                                and m.id=p.MOVIEID
-                                ;"/>
+        <constructor-arg value="
+        select  m.id, m.MOVIENAME, m.MOVIENAMEORIG, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        from 	movies m,
+                posters p
+        where 1=1
+        and m.id=p.MOVIEID;"
+        />
     </bean>
 
+
+
+
     <bean id="getMoviesRandomSQL" class="java.lang.String">
-         <constructor-arg value="select  m.id, m.MOVIENAME, m.MOVIENAMEORIG, m.YEAR,m.DESCRIPTION,m.RATING,m.PRICE, p.LINK as poster,  GROUP_CONCAT(distinct c.NAME)  as country, GROUP_CONCAT(distinct g.NAME)  as genre
-                                from 	movies m,
-                                        movie_countries mc,
-                                        countries c,
-                                        moviegenre mg,
-                                        genres g,
-                                        posters p
-                                where 1=1
-                                and m.ID = mc.MOVIE_ID
-                                and mc.COUNTRY_ID = c.id
-                                and m.ID = mg.MOVIEID
-                                and mg.GENREID = g.id
-                                and m.id=p.MOVIEID
-                                group by m.id, m.MOVIENAME, m.MOVIENAMEORIG, m.YEAR,m.DESCRIPTION,m.RATING,m.PRICE,p.LINK
-                                order by rand()
-                                limit 3;"/>
+        <constructor-arg value="
+        select  m.id, m.MOVIENAME, m.MOVIENAMEORIG, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        from 	movies m,
+                posters p
+        where 1=1
+        and m.id=p.MOVIEID
+        order by rand()
+        limit 3
+        ;"
+        />
+    </bean>
+
+
+    <bean id="getMoviesWithCountrySQL" class="java.lang.String">
+        <constructor-arg value="
+        select mc.MOVIE_ID, mc.COUNTRY_ID, c.NAME
+         from movie_countries mc,
+                countries c
+         where mc.country_id=c.id
+         and mc.MOVIE_ID in (:ids)
+         order by MOVIE_ID
+         ;"
+        />
     </bean>
 
 
