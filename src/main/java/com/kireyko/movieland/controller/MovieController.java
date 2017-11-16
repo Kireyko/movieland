@@ -82,7 +82,6 @@ public class MovieController {
         return new ResponseEntity<>(movieJson, HttpStatus.OK);
     }
 
-    //!!!!!!
     @RequestMapping(value = "/movie/genre", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
     public ResponseEntity<String> getGenresAll() {
