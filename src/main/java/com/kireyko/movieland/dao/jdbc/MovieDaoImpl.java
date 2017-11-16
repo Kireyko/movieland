@@ -44,6 +44,8 @@ public class MovieDaoImpl implements MovieDao{
     @Autowired
     private String getGenresAllSQL;
 
+    @Autowired
+    private String getMoviesByGenreIdSQL;
 
     @Override
     public List<Movie> getMoviesAll() {
@@ -83,6 +85,19 @@ public class MovieDaoImpl implements MovieDao{
         List<Genre> genres = jdbcTemplate.query(getGenresAllSQL, genreRowMapper);
         log.info("Finish query to get genres list from DB. It took {} ms",  System.currentTimeMillis() - startTime);
         return genres;
+    }
+
+    @Override
+    public List<Movie> getMoviesByGenreId(int id){
+        log.info("Start query to get list of movies by genre ");
+        long startTime = System.currentTimeMillis();
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("id", id);
+        List<Movie> movies = namedJdbcTemplate.query(getMoviesByGenreIdSQL,parameters,  movieRowMapper);
+        //List<Movie> moviesEnriched = movieEnrichment.enrichMovie(movies);
+        log.info("Finish query to get list of movies by genre from DB. It took {} ms",  System.currentTimeMillis() - startTime);
+        return movies;
     }
 
 }

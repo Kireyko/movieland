@@ -72,4 +72,18 @@
         />
     </bean>
 
+    <bean id="getMoviesByGenreIdSQL" class="java.lang.String">
+        <constructor-arg value="
+        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        from 	movie m,
+                poster p,
+                movie_with_genre mg
+        where 1=1
+        and m.id=p.MOVIE_ID
+        and m.ID=mg.MOVIE_ID
+        and mg.GENRE_ID = :id;"
+        />
+    </bean>
+
+
 </beans>

@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping("/v1")
 public class MovieController {
     private int movieid = 0;
+    private int genreId =110;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String COMMA_SEPARATOR = ",";
@@ -38,6 +39,8 @@ public class MovieController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String welcome(ModelMap model) {
         model.addAttribute("movieid", ++movieid);
+        model.addAttribute("genreId", genreId);
+
         log.debug("[movie_] movieid : {}", movieid);
         return "v1";
     }
@@ -82,7 +85,7 @@ public class MovieController {
         return new ResponseEntity<>(movieJson, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/movie/genre", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
+    @RequestMapping(value = "/genre", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
     public ResponseEntity<String> getGenresAll() {
         log.info("Sending request to get all list of genres ");
@@ -94,6 +97,19 @@ public class MovieController {
         }
         log.info("Full list of genres was received. It took {} ms."+System.lineSeparator()+" List: {}", System.currentTimeMillis() - startTime, genresAllJson);
         return new ResponseEntity<>(genresAllJson, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value="/movie/genre/{genreId}", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public ResponseEntity<String> getMoviesByGenreId(@PathVariable int genreId) {
+        log.info("Sending request to get list of movies by genre id = {}", genreId);
+        long startTime = System.currentTimeMillis();
+        String moviesByGenreId = null;
+        List<Movie> movie = movieService.getMoviesByGenreId(genreId);
+        moviesByGenreId = jsonJacksonConverter.parseEntityToJson(movie);
+        log.info("Movie {} is received. It took {} ms", moviesByGenreId, System.currentTimeMillis() - startTime);
+        return new ResponseEntity<>(moviesByGenreId, HttpStatus.OK);
     }
 
 }

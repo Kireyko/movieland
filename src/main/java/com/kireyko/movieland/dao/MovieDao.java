@@ -10,4 +10,5 @@ public interface MovieDao {
     List<Movie> getMoviesRandom();
     Movie getById(int id);
     List<Genre> getGenresAll();
+    List<Movie> getMoviesByGenreId(int id);
 }
