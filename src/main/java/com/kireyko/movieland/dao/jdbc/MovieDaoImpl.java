@@ -1,7 +1,6 @@
 package com.kireyko.movieland.dao.jdbc;
 
 import com.kireyko.movieland.dao.MovieDao;
-import com.kireyko.movieland.dao.jdbc.mapper.MovieFullRowMapper;
 import com.kireyko.movieland.dao.jdbc.mapper.MovieRowMapper;
 import com.kireyko.movieland.entity.Movie;
 import com.kireyko.movieland.service.enrichment.MovieEnrichment;
@@ -18,8 +17,6 @@ import java.util.List;
 @Service
 public class MovieDaoImpl implements MovieDao{
     private final Logger log = LoggerFactory.getLogger(getClass());
-
-//    private final MovieFullRowMapper movieFullRowMapper = new MovieFullRowMapper();
     private final MovieRowMapper movieRowMapper = new MovieRowMapper();
 
     @Autowired

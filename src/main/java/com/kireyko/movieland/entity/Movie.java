@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Movie {
     private int id;
-    private String moviename;
-    private String movienameorig;
+    private String nameRussian;
+    private String nameNative;
     private int year;
     private Float rating;
     private Float price;
@@ -23,18 +23,18 @@ public class Movie {
         this.id = id;
     }
 
-    public String getMoviename() {
-        return moviename;
+    public String getNameRussian() {
+        return nameRussian;
     }
-    public void setMoviename(String moviename) {
-        this.moviename = moviename;
+    public void setNameRussian(String nameRussian) {
+        this.nameRussian = nameRussian;
     }
 
-    public String getMovienameorig() {
-        return movienameorig;
+    public String getNameNative() {
+        return nameNative;
     }
-    public void setMovienameorig(String movienameorig) {
-        this.movienameorig = movienameorig;
+    public void setNameNative(String nameNative) {
+        this.nameNative = nameNative;
     }
 
     public int getYear() {
@@ -86,8 +86,8 @@ public class Movie {
     public String toString() {
         return "Movie{" +
                 "id=" + id +
-                ", moviename='" + moviename + '\'' +
-                ", movienameorig='" + movienameorig + '\'' +
+                ", nameRussian='" + nameRussian + '\'' +
+                ", nameNative='" + nameNative + '\'' +
                 ", year=" + year +
                 ", country='" + country + '\'' +
                 ", description='" + description + '\'' +

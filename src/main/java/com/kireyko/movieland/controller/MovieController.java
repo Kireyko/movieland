@@ -83,8 +83,8 @@ public class MovieController {
         String movieJson = null;
         if(null !=movie ) {
             Object[] movieFieldsAll = {
-                    movie.getId(), movie.getMoviename(), movie.getMovienameorig(), movie.getYear(),  movie.getPrice(),movie.getRating(), movie.getPoster(),
-                    movie.getDescription(), movie.getCountry(), movie.getGenre()
+                    movie.getId(), movie.getNameRussian(), movie.getNameNative(), movie.getYear(),  movie.getPrice(),movie.getRating(), movie.getPoster(),
+                    movie.getDescription(), movie.getCountryName(), movie.getGenre()
             };
             movieJson = jsonConverter.toJson(movieFieldNamesAll, movieFieldsAll);
         }

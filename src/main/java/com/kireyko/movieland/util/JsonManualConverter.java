@@ -22,7 +22,7 @@ public class JsonManualConverter {
 
             for (Movie movie: movies){
                 Object[] movieFieldsShort = {
-                        movie.getId(), movie.getMoviename(), movie.getMovienameorig(), movie.getYear(),  movie.getPrice(),movie.getRating(), movie.getPoster()
+                        movie.getId(), movie.getMoviename(), movie.getNameNative(), movie.getYear(),  movie.getPrice(),movie.getRating(), movie.getPoster()
                 };
                 if (sb.length() !=0) {
                     sb.append(",");

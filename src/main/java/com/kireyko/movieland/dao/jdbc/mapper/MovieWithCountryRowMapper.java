@@ -13,7 +13,7 @@ public class MovieWithCountryRowMapper implements RowMapper<MovieWithCountry> {
         MovieWithCountry movieWithCountry = new MovieWithCountry();
         movieWithCountry.setMovieId(resultSet.getInt("MOVIE_ID"));
         movieWithCountry.setCountryId(resultSet.getInt("COUNTRY_ID"));
-        movieWithCountry.setCountry(resultSet.getString("NAME"));
+        movieWithCountry.setCountryName(resultSet.getString("NAME"));
         return movieWithCountry;
     }
 }

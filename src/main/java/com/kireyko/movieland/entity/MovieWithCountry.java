@@ -1,6 +1,5 @@
 package com.kireyko.movieland.entity;
 
-
 public class MovieWithCountry {
     private int movieId;
     private int countryId;
@@ -9,7 +8,6 @@ public class MovieWithCountry {
     public int getMovieId() {
         return movieId;
     }
-
     public void setMovieId(int movieId) {
         this.movieId = movieId;
     }
@@ -17,16 +15,12 @@ public class MovieWithCountry {
     public int getCountryId() {
         return countryId;
     }
-
     public void setCountryId(int countryId) {
         this.countryId = countryId;
     }
 
-    public String getCountry() {
-        return countryName;
-    }
-
-    public void setCountry(String country) {
+    public String getCountryName() { return countryName; }
+    public void setCountryName(String country) {
         this.countryName = country;
     }
 
