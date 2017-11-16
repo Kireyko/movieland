@@ -1,5 +1,6 @@
 package com.kireyko.movieland.controller;
 
+import com.kireyko.movieland.entity.Genre;
 import com.kireyko.movieland.entity.Movie;
 import com.kireyko.movieland.service.MovieService;
 import com.kireyko.movieland.util.JsonJacksonConverter;
@@ -25,9 +26,6 @@ public class MovieController {
     private static final String COLON_SEPARATOR = ":";
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-//    String[] movieFieldNamesShort   = {"id", "moviename", "movienameorig", "year", "price", "rating", "poster"};
-//    String[] movieFieldNamesAll     = {"id", "moviename", "movienameorig", "year", "price", "rating", "poster", "description", "country", "genre"};
-
     @Autowired
     private MovieService movieService;
 
@@ -44,7 +42,7 @@ public class MovieController {
         return "v1";
     }
 
-    @RequestMapping(value = "/movie", method = RequestMethod.GET, produces = "application/json; charset=utf-8" )
+    @RequestMapping(value = "/movie", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
     public ResponseEntity<String> getMoviesAll() {
         log.info("Sending request to get list of movies ");
@@ -58,7 +56,7 @@ public class MovieController {
         return new ResponseEntity<>(moviesAllJson, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/movie/random", method = RequestMethod.GET, produces = "application/json; charset=utf-8" )
+    @RequestMapping(value = "/movie/random", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
     public ResponseEntity<String> getMoviesRandom() {
         log.info("Sending request to get random list of movies ");
@@ -72,26 +70,31 @@ public class MovieController {
         return new ResponseEntity<>(moviesRandomJson, HttpStatus.OK);
     }
 
-
-/*
-    @RequestMapping(value="/movie/{movieId}", produces = "application/json; charset=utf-8" )
+    @RequestMapping(value="/movie/{movieId}", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
     public ResponseEntity<String> getMovieById(@PathVariable int movieId) {
         log.info("Sending request to get movie with id = {}", movieId);
         long startTime = System.currentTimeMillis();
-        Movie movie = movieService.getById(movieId);
         String movieJson = null;
-        if(null !=movie ) {
-            Object[] movieFieldsAll = {
-                    movie.getId(), movie.getNameRussian(), movie.getNameNative(), movie.getYear(),  movie.getPrice(),movie.getRating(), movie.getPoster(),
-                    movie.getDescription(), movie.getCountryName(), movie.getGenre()
-            };
-            movieJson = jsonConverter.toJson(movieFieldNamesAll, movieFieldsAll);
-        }
+        Movie movie = movieService.getById(movieId);
+        movieJson = jsonJacksonConverter.parseEntityToJson(movie);
         log.info("Movie {} is received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(movieJson, HttpStatus.OK);
     }
-*/
 
+    //!!!!!!
+    @RequestMapping(value = "/movie/genre", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public ResponseEntity<String> getGenresAll() {
+        log.info("Sending request to get all list of genres ");
+        long startTime = System.currentTimeMillis();
+        String genresAllJson = null;
+        List<Genre> genres = movieService.getGenresAll();
+        if(null !=genres && genres.size()>0){
+            genresAllJson = jsonJacksonConverter.parseEntityToJson(genres);
+        }
+        log.info("Full list of genres was received. It took {} ms."+System.lineSeparator()+" List: {}", System.currentTimeMillis() - startTime, genresAllJson);
+        return new ResponseEntity<>(genresAllJson, HttpStatus.OK);
+    }
 
 }

@@ -6,24 +6,13 @@
 
     <bean id="getMovieByIdSQL" class="java.lang.String">
         <!--<constructor-arg value="select id, MOVIENAME, NAME_NATIVE, YEAR, COUNTRY, DESCRIPTION, RATING, PRICE from movieland.movies where id = ? ;"/>-->
-
-        <constructor-arg
-                value="select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR,m.DESCRIPTION,m.RATING,m.PRICE, p.LINK as poster,  GROUP_CONCAT(distinct c.NAME)  as country, GROUP_CONCAT(distinct g.NAME)  as genre
-                                from 	movie m,
-                                        movie_with_country mc,
-                                        country c,
-                                        movie_with_genre mg,
-                                        genre g,
-                                        poster p
-                                where 1=1
-                                and m.id=?
-                                and m.ID = mc.MOVIE_ID
-                                and mc.COUNTRY_ID = c.id
-                                and m.ID = mg.MOVIE_ID
-                                and mg.GENRE_ID = g.id
-                                and m.id=p.MOVIE_ID
-                                group by m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR,m.DESCRIPTION,m.RATING,m.PRICE,p.LINK
-                        order by mc.MOVIE_ID, mc.COUNTRY_ID, mg.GENRE_ID ;"/>
+        <constructor-arg value="
+        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        from 	movie m,
+                poster p
+        where 1=1
+        and m.id=?
+        and m.id=p.MOVIE_ID;"/>
 
     </bean>
 
@@ -48,8 +37,7 @@
         where 1=1
         and m.id=p.MOVIE_ID
         order by rand()
-        limit 3
-        ;"
+        limit 3;"
         />
     </bean>
 
@@ -61,8 +49,7 @@
               country c
          where mc.country_id=c.id
          and mc.MOVIE_ID in (:ids)
-         order by MOVIE_ID
-         ;"
+         order by MOVIE_ID;"
         />
     </bean>
 
@@ -74,8 +61,14 @@
               genre g
          where mg.GENRE_ID=g.id
          and mg.MOVIE_ID in (:ids)
-         order by mg.MOVIE_ID
-         ;"
+         order by mg.MOVIE_ID;"
+        />
+    </bean>
+
+
+    <bean id="getGenresAllSQL" class="java.lang.String">
+        <constructor-arg value="
+        select id, NAME from genre;"
         />
     </bean>
 

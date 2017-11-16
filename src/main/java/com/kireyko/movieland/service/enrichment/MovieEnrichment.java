@@ -64,21 +64,16 @@ public class MovieEnrichment {
 
     private void addGenre(List<Movie> movies, ArrayList<Integer> movieIdList) {
             Map<Integer, List<Genre>> movieWithGenreMap = new HashMap<>();
-            //получить лист movieid/ countries для списка
             List<MovieWithGenre> movieWithGenreList = getMovieWithGenreList(movieIdList);
-            //заполнить мапу movieid/countries
             for (MovieWithGenre movieWithGenre: movieWithGenreList){
                 Integer countryId = movieWithGenre.getMovieId();
                 movieWithGenreMap.putIfAbsent(countryId, new ArrayList<Genre>() );
                 movieWithGenreMap.get(countryId).add( new Genre(movieWithGenre.getGenreId(),movieWithGenre.getGenreName()));
             }
-            //обновить значения country для movie
             for (Movie movie: movies ) {
                 movieWithGenreMap.get(movie.getId());
                 movie.setGenre(movieWithGenreMap.get(movie.getId()));
             }
-
-
     }
 
     private List<MovieWithGenre> getMovieWithGenreList(ArrayList<Integer> movieIdList) {
@@ -94,8 +89,4 @@ public class MovieEnrichment {
         List<MovieWithCountry> movieWithCountry = jdbcTemplate.query(getMoviesWithCountrySQL,  parameters, movieWithCountryRowMapper);
         return movieWithCountry;
     }
-
-
-
-
 }

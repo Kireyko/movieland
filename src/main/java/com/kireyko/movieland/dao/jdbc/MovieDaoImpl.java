@@ -1,7 +1,9 @@
 package com.kireyko.movieland.dao.jdbc;
 
 import com.kireyko.movieland.dao.MovieDao;
+import com.kireyko.movieland.dao.jdbc.mapper.GenreRowMapper;
 import com.kireyko.movieland.dao.jdbc.mapper.MovieRowMapper;
+import com.kireyko.movieland.entity.Genre;
 import com.kireyko.movieland.entity.Movie;
 import com.kireyko.movieland.service.enrichment.MovieEnrichment;
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import java.util.List;
 public class MovieDaoImpl implements MovieDao{
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final MovieRowMapper movieRowMapper = new MovieRowMapper();
+    private final GenreRowMapper genreRowMapper = new GenreRowMapper();
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -38,6 +41,10 @@ public class MovieDaoImpl implements MovieDao{
     @Autowired
     private String getMoviesRandomSQL;
 
+    @Autowired
+    private String getGenresAllSQL;
+
+
     @Override
     public List<Movie> getMoviesAll() {
         log.info("Start query to get list of movies ");
@@ -52,19 +59,30 @@ public class MovieDaoImpl implements MovieDao{
         log.info("Start query to get random list of movies ");
         long startTime = System.currentTimeMillis();
         List<Movie> movies = jdbcTemplate.query(getMoviesRandomSQL, movieRowMapper);
-        //add new fields
+        //populate additional fields
         List<Movie> moviesEnriched = movieEnrichment.enrichMovie(movies);
 
         log.info("Finish query to get random movie list from DB. It took {} ms", System.currentTimeMillis() - startTime);
         return movies;
     }
 
-//    @Override
-//    public Movie getById(int id) {
-//        log.info("Start query to get movie with id {} from DB", id);
-//        long startTime = System.currentTimeMillis();
-//        Movie movie = jdbcTemplate.queryForObject(getMovieByIdSQL, new Object[]{id}, movieFullRowMapper);
-//        log.info("Finish query to get movie with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
-//        return movie;
-//    }
+    @Override
+    public Movie getById(int id) {
+        log.info("Start query to get movie with id {} from DB", id);
+        long startTime = System.currentTimeMillis();
+        //add enrich movie
+        Movie movie = jdbcTemplate.queryForObject(getMovieByIdSQL, new Object[]{id}, movieRowMapper);
+        log.info("Finish query to get movie with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
+        return movie;
+    }
+
+    @Override
+    public List<Genre> getGenresAll() {
+        log.info("Start query to get list of genres ");
+        long startTime = System.currentTimeMillis();
+        List<Genre> genres = jdbcTemplate.query(getGenresAllSQL, genreRowMapper);
+        log.info("Finish query to get genres list from DB. It took {} ms",  System.currentTimeMillis() - startTime);
+        return genres;
+    }
+
 }

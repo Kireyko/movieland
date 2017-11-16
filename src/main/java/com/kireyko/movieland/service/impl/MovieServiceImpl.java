@@ -1,6 +1,7 @@
 package com.kireyko.movieland.service.impl;
 
 import com.kireyko.movieland.dao.MovieDao;
+import com.kireyko.movieland.entity.Genre;
 import com.kireyko.movieland.entity.Movie;
 import com.kireyko.movieland.service.MovieService;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @Service
-public class MovieServiceImpl  implements MovieService{
+public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieDao movieDao;
 
@@ -25,14 +26,13 @@ public class MovieServiceImpl  implements MovieService{
         return movieDao.getMoviesRandom();
     }
 
-    //    @Override
-    //    public Movie getById(int id) {
-    //        return movieDao.getById(id);
-    //    }
+    @Override
+    public Movie getById(int id) {
+        return movieDao.getById(id);
+    }
 
-
-
-
-
+    @Override
+    public List<Genre> getGenresAll() {
+        return movieDao.getGenresAll();
+    }
 }
-
