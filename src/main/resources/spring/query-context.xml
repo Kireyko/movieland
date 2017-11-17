@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="getMovieByIdSQL" class="java.lang.String">
+        <!--<constructor-arg value="select id, MOVIENAME, NAME_NATIVE, YEAR, COUNTRY, DESCRIPTION, RATING, PRICE from movieland.movies where id = ? ;"/>-->
+        <constructor-arg value="
+        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        from 	movie m,
+                poster p
+        where 1=1
+        and m.id=?
+        and m.id=p.MOVIE_ID;"/>
+
+    </bean>
+
+    <bean id="getMoviesAllSQL" class="java.lang.String">
+        <constructor-arg value="
+        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        from 	movie m,
+                poster p
+        where 1=1
+        and m.id=p.MOVIE_ID;"
+        />
+    </bean>
+
+
+
+
+    <bean id="getMoviesRandomSQL" class="java.lang.String">
+        <constructor-arg value="
+        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        from 	movie m,
+                poster p
+        where 1=1
+        and m.id=p.MOVIE_ID
+        order by rand()
+        limit 3;"
+        />
+    </bean>
+
+
+    <bean id="getMoviesWithCountrySQL" class="java.lang.String">
+        <constructor-arg value="
+        select mc.MOVIE_ID, mc.COUNTRY_ID, c.NAME
+         from movie_with_country mc,
+              country c
+         where mc.country_id=c.id
+         and mc.MOVIE_ID in (:ids)
+         order by MOVIE_ID;"
+        />
+    </bean>
+
+
+    <bean id="getMoviesWithGenreSQL" class="java.lang.String">
+        <constructor-arg value="
+        select mg.MOVIE_ID, mg.GENRE_ID, g.NAME
+         from movie_with_genre mg,
+              genre g
+         where mg.GENRE_ID=g.id
+         and mg.MOVIE_ID in (:ids)
+         order by mg.MOVIE_ID;"
+        />
+    </bean>
+
+
+    <bean id="getGenresAllSQL" class="java.lang.String">
+        <constructor-arg value="
+        select id, NAME from genre;"
+        />
+    </bean>
+
+    <bean id="getMoviesByGenreIdSQL" class="java.lang.String">
+        <constructor-arg value="
+        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        from 	movie m,
+                poster p,
+                movie_with_genre mg
+        where 1=1
+        and m.id=p.MOVIE_ID
+        and m.ID=mg.MOVIE_ID
+        and mg.GENRE_ID = :id;"
+        />
+    </bean>
+
+
+</beans>
