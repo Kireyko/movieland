@@ -15,12 +15,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/v1")
 public class MovieController {
     private int movieid = 0;
-    private int genreId =110;
+    private int genreId =32;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String COMMA_SEPARATOR = ",";
@@ -47,11 +48,11 @@ public class MovieController {
 
     @RequestMapping(value = "/movie", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public ResponseEntity<String> getMoviesAll() {
-        log.info("Sending request to get list of movies ");
+    public ResponseEntity<String> getMoviesAll(@RequestParam(required = false) Map<String, String> parameters) {
+        log.info("Sending request to get list of movies {} ",parameters);
         long startTime = System.currentTimeMillis();
         String moviesAllJson = null;
-        List<Movie> movies = movieService.getMoviesAll();
+        List<Movie> movies = movieService.getMoviesAll( parameters);
         if(null !=movies && movies.size()>0) {
             moviesAllJson = jsonJacksonConverter.parseEntityToJson(movies);
         }

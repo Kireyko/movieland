@@ -89,14 +89,14 @@ public class Movie {
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +
                 ", year=" + year +
-                ", country='" + country + '\'' +
-                ", description='" + description + '\'' +
                 ", rating=" + rating +
                 ", price=" + price +
+                ", description='" + description + '\'' +
+                ", poster='" + poster + '\'' +
+                ", country=" + country +
+                ", genre=" + genre +
                 '}';
     }
-
-
 }
 
 

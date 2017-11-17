@@ -3,6 +3,7 @@ package com.kireyko.movieland.dao.jdbc;
 import com.kireyko.movieland.dao.MovieDao;
 import com.kireyko.movieland.dao.jdbc.mapper.GenreRowMapper;
 import com.kireyko.movieland.dao.jdbc.mapper.MovieRowMapper;
+import com.kireyko.movieland.dao.jdbc.sqlbuilder.SqlBuilder;
 import com.kireyko.movieland.entity.Genre;
 import com.kireyko.movieland.entity.Movie;
 import com.kireyko.movieland.service.enrichment.MovieEnrichment;
@@ -15,6 +16,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MovieDaoImpl implements MovieDao{
@@ -48,10 +50,11 @@ public class MovieDaoImpl implements MovieDao{
     private String getMoviesByGenreIdSQL;
 
     @Override
-    public List<Movie> getMoviesAll() {
+    public List<Movie> getMoviesAll(Map<String, String> parameters) {
         log.info("Start query to get list of movies ");
         long startTime = System.currentTimeMillis();
-        List<Movie> movies = jdbcTemplate.query(getMoviesAllSQL, movieRowMapper);
+        String getMoviesAllWithParametersSQL = SqlBuilder.enrichQuery(getMoviesAllSQL, parameters);
+        List<Movie> movies = jdbcTemplate.query(getMoviesAllWithParametersSQL, movieRowMapper);
         log.info("Finish query to get movie list from DB. It took {} ms",  System.currentTimeMillis() - startTime);
         return movies;
     }
