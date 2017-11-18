@@ -11,23 +11,22 @@
 
     <servlet-mapping>
         <servlet-name>movieland</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/v1/*</url-pattern>
     </servlet-mapping>
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!--
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/movieland-servlet.xml</param-value>
-    </contparam>
-    -->
-
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:/spring/root-context.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+        </param-value>
     </context-param>
 
     <web-app>
