@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,15 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/v1")
+@RequestMapping(value = "/movie", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.GET)
 public class MovieController {
-    private int movieid = 0;
-    private int genreId =32;
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String COMMA_SEPARATOR = ",";
-    private static final String COLON_SEPARATOR = ":";
-    private static final String LINE_SEPARATOR = System.lineSeparator();
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private MovieService movieService;
@@ -37,16 +33,7 @@ public class MovieController {
     @Autowired
     private JsonJacksonConverter jsonJacksonConverter;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String welcome(ModelMap model) {
-        model.addAttribute("movieid", ++movieid);
-        model.addAttribute("genreId", genreId);
-
-        log.debug("[movie_] movieid : {}", movieid);
-        return "v1";
-    }
-
-    @RequestMapping(value = "/movie", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
+    @RequestMapping
     @ResponseBody
     public ResponseEntity<String> getMoviesAll(@RequestParam(required = false) Map<String, String> parameters) {
         log.info("Sending request to get list of movies {} ",parameters);
@@ -60,7 +47,7 @@ public class MovieController {
         return new ResponseEntity<>(moviesAllJson, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/movie/random", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
+    @RequestMapping(value = "/random", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
     public ResponseEntity<String> getMoviesRandom() {
         log.info("Sending request to get random list of movies ");
@@ -74,7 +61,7 @@ public class MovieController {
         return new ResponseEntity<>(moviesRandomJson, HttpStatus.OK);
     }
 
-    @RequestMapping(value="/movie/{movieId}", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
+    @RequestMapping(value="/{movieId}", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
     public ResponseEntity<String> getMovieById(@PathVariable int movieId) {
         log.info("Sending request to get movie with id = {}", movieId);
@@ -85,7 +72,7 @@ public class MovieController {
         log.info("Movie {} is received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(movieJson, HttpStatus.OK);
     }
-
+    //to remove
     @RequestMapping(value = "/genre", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
     public ResponseEntity<String> getGenresAll() {
@@ -101,7 +88,7 @@ public class MovieController {
     }
 
 
-    @RequestMapping(value="/movie/genre/{genreId}", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
+    @RequestMapping(value="/genre/{genreId}", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
     @ResponseBody
     public ResponseEntity<String> getMoviesByGenreId(@PathVariable int genreId) {
         log.info("Sending request to get list of movies by genre id = {}", genreId);

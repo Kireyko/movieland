@@ -10,7 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/tmp")
 public class RootController {
     private static int counter = 0;
     private static final String VIEW_INDEX = "index";
