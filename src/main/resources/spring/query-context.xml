@@ -5,7 +5,6 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="getMovieByIdSQL" class="java.lang.String">
-        <!--<constructor-arg value="select id, MOVIENAME, NAME_NATIVE, YEAR, COUNTRY, DESCRIPTION, RATING, PRICE from movieland.movies where id = ? ;"/>-->
         <constructor-arg value="
         select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
         from 	movie m,

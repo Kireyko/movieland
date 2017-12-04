@@ -23,21 +23,4 @@ public class JsonJacksonConverter {
         log.info("Entity {} is received. It took {} ms", entity, System.currentTimeMillis() - startTime);
         return entityJson;
     }
-/*
-    public Movie parseJsonToEntity(String json) {
-        log.info("Start parsing entity from json {}", json);
-        long startTime = System.currentTimeMillis();
-        Movie movie = parseValue(json, Movie.class);
-        log.info("Movie {} is received. It took {} ms", movie, System.currentTimeMillis() - startTime);
-        return movie;
-    }
-
-    private <T> T parseValue(String json, Class<T> clazz) {
-        try {
-            return objectMapper.readValue(json, clazz);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-*/
 }

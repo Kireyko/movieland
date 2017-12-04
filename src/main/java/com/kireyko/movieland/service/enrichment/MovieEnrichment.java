@@ -19,7 +19,7 @@ public class MovieEnrichment {
 
     private final MovieWithCountryRowMapper movieWithCountryRowMapper = new MovieWithCountryRowMapper();
     private final MovieWithGenreRowMapper movieWithGenreRowMapper = new MovieWithGenreRowMapper();
-    //private final BeanPropertyRowMapper<MovieWithCountry> movieToCountryBeanPropertyRowMapper = new BeanPropertyRowMapper<>(MovieWithCountry.class);
+
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -47,15 +47,15 @@ public class MovieEnrichment {
 
     private void addCountry(List<Movie> movies, ArrayList<Integer> movieIdList) {
         Map<Integer, List<Country>> movieWithCountryMap = new HashMap<>();
-        //получить лист movieid/ countries для списка
+        //get list of  movieis/ countries for list
         List<MovieWithCountry> movieWithCountryList = getMovieWithCountryList(movieIdList);
-        //заполнить мапу movieid/countries
+        //fill map  movieid/countries
         for (MovieWithCountry movieWithCountry: movieWithCountryList){
             Integer countryId = movieWithCountry.getMovieId();
             movieWithCountryMap.putIfAbsent(countryId, new ArrayList<Country>() );
             movieWithCountryMap.get(countryId).add( new Country(movieWithCountry.getCountryId(),movieWithCountry.getCountryName()));
         }
-        //обновить значения country для movie
+        //update value of country for movie
         for (Movie movie: movies ) {
             movieWithCountryMap.get(movie.getId());
             movie.setCountry(movieWithCountryMap.get(movie.getId()));

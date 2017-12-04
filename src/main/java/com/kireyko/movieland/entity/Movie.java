@@ -13,8 +13,8 @@ public class Movie {
     private String description;
     private String poster;
 
-    private List<Country> country;
-    private List<Genre> genre;
+    private List<Country> countries;
+    private List<Genre> genres;
 
     public int getId() {
         return id;
@@ -45,17 +45,17 @@ public class Movie {
     }
 
     public List<Country> getCountry() {
-        return this.country;
+        return this.countries;
     }
     public void setCountry(List<Country> country) {
-        this.country=country;
+        this.countries=country;
     }
 
     public List<Genre> getGenre() {
-        return this.genre;
+        return this.genres;
     }
     public void setGenre(List<Genre>  genre) {
-        this.genre=genre;
+        this.genres=genre;
     }
 
     public String getDescription() {
@@ -93,8 +93,8 @@ public class Movie {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", poster='" + poster + '\'' +
-                ", country=" + country +
-                ", genre=" + genre +
+                ", country=" + countries +
+                ", genre=" + genres +
                 '}';
     }
 }
