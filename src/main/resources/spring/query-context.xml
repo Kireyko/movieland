@@ -6,18 +6,18 @@
 
     <bean id="getMovieByIdSQL" class="java.lang.String">
         <constructor-arg value="
-        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        select  m.id, m.NAME_RUSSIAN as nameRussian, m.NAME_NATIVE as nameNative, m.YEAR as yearOfRelease, m.RATING, m.PRICE, p.LINK as picturePath, m.DESCRIPTION
         from 	movie m,
                 poster p
         where 1=1
-        and m.id=?
+        and m.id=:id
         and m.id=p.MOVIE_ID"/>
 
     </bean>
 
     <bean id="getMoviesAllSQL" class="java.lang.String">
         <constructor-arg value="
-        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        select  m.id, m.NAME_RUSSIAN as nameRussian, m.NAME_NATIVE as nameNative, m.YEAR as yearOfRelease, m.RATING, m.PRICE, p.LINK as picturePath, m.DESCRIPTION
         from 	movie m,
                 poster p
         where 1=1
@@ -25,12 +25,9 @@
         />
     </bean>
 
-
-
-
     <bean id="getMoviesRandomSQL" class="java.lang.String">
         <constructor-arg value="
-        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        select  m.id, m.NAME_RUSSIAN as nameRussian, m.NAME_NATIVE as nameNative, m.YEAR as yearOfRelease, m.RATING, m.PRICE, p.LINK as picturePath, m.DESCRIPTION
         from 	movie m,
                 poster p
         where 1=1
@@ -39,7 +36,6 @@
         limit 3"
         />
     </bean>
-
 
     <bean id="getMoviesWithCountrySQL" class="java.lang.String">
         <constructor-arg value="
@@ -52,7 +48,6 @@
         />
     </bean>
 
-
     <bean id="getMoviesWithGenreSQL" class="java.lang.String">
         <constructor-arg value="
         select mg.MOVIE_ID, mg.GENRE_ID, g.NAME
@@ -64,7 +59,6 @@
         />
     </bean>
 
-
     <bean id="getGenresAllSQL" class="java.lang.String">
         <constructor-arg value="
         select id, NAME from genre"
@@ -73,7 +67,7 @@
 
     <bean id="getMoviesByGenreIdSQL" class="java.lang.String">
         <constructor-arg value="
-        select  m.id, m.NAME_RUSSIAN, m.NAME_NATIVE, m.YEAR, m.RATING, m.PRICE, p.LINK as POSTER
+        select  m.id, m.NAME_RUSSIAN as nameRussian, m.NAME_NATIVE as nameNative, m.YEAR as yearOfRelease, m.RATING, m.PRICE, p.LINK as picturePath, m.DESCRIPTION
         from 	movie m,
                 poster p,
                 movie_with_genre mg
@@ -83,6 +77,5 @@
         and mg.GENRE_ID = :id"
         />
     </bean>
-
 
 </beans>

@@ -22,9 +22,6 @@ public class MovieDaoImpl implements MovieDao{
     private final MovieRowMapper movieRowMapper = new MovieRowMapper();
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 
     @Autowired
@@ -47,7 +44,7 @@ public class MovieDaoImpl implements MovieDao{
         LOG.info("Start query to get list of movies ");
         long startTime = System.currentTimeMillis();
         String getMoviesAllWithParametersSQL = SqlBuilder.enrichQuery(getMoviesAllSQL, parameters);
-        List<Movie> movies = jdbcTemplate.query(getMoviesAllWithParametersSQL, movieRowMapper);
+        List<Movie> movies = namedJdbcTemplate.query(getMoviesAllWithParametersSQL, movieRowMapper);
         LOG.info("Finish query to get movie list from DB. It took {} ms",  System.currentTimeMillis() - startTime);
         return movies;
     }
@@ -56,10 +53,8 @@ public class MovieDaoImpl implements MovieDao{
     public List<Movie> getMoviesRandom() {
         LOG.info("Start query to get random list of movies ");
         long startTime = System.currentTimeMillis();
-        List<Movie> movies = jdbcTemplate.query(getMoviesRandomSQL, movieRowMapper);
-        //populate additional fields
+        List<Movie> movies = namedJdbcTemplate.query(getMoviesRandomSQL, movieRowMapper);
         List<Movie> moviesEnriched = movieEnrichment.enrichMovie(movies);
-
         LOG.info("Finish query to get random movie list from DB. It took {} ms", System.currentTimeMillis() - startTime);
         return movies;
     }
@@ -68,10 +63,12 @@ public class MovieDaoImpl implements MovieDao{
     public Movie getById(int id) {
         LOG.info("Start query to get movie with id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        //add enrich movie
-        Movie movie = jdbcTemplate.queryForObject(getMovieByIdSQL, new Object[]{id}, movieRowMapper);
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("id", id);
+        Movie movie = namedJdbcTemplate.queryForObject(getMovieByIdSQL, parameters, movieRowMapper);
+        Movie movieEnriched = movieEnrichment.enrichMovie(movie);
         LOG.info("Finish query to get movie with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
-        return movie;
+        return movieEnriched;
     }
 
 
@@ -83,7 +80,6 @@ public class MovieDaoImpl implements MovieDao{
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("id", id);
         List<Movie> movies = namedJdbcTemplate.query(getMoviesByGenreIdSQL,parameters,  movieRowMapper);
-        //List<Movie> moviesEnriched = movieEnrichment.enrichMovie(movies);
         LOG.info("Finish query to get list of movies by genre from DB. It took {} ms",  System.currentTimeMillis() - startTime);
         return movies;
     }

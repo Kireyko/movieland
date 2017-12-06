@@ -13,12 +13,13 @@ public class MovieRowMapper implements RowMapper<Movie> {
         Movie movie = new Movie();
 
         movie.setId(resultSet.getInt("id"));
-        movie.setNameRussian(resultSet.getString("NAME_RUSSIAN"));
-        movie.setNameNative(resultSet.getString("NAME_NATIVE"));
-        movie.setYear(resultSet.getInt("year"));
+        movie.setNameRussian(resultSet.getString("nameRussian"));
+        movie.setNameNative(resultSet.getString("nameNative"));
+        movie.setYearOfRelease(resultSet.getInt("yearOfRelease"));
         movie.setRaiting(resultSet.getFloat("rating"));
         movie.setPrice(resultSet.getFloat("price"));
-        movie.setPoster(resultSet.getString("poster"));
+        movie.setPicturePath(resultSet.getString("picturePath"));
+        movie.setDescription(resultSet.getString("description"));
 
         return movie;
     }
