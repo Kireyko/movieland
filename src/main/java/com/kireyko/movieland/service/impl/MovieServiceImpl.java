@@ -1,11 +1,9 @@
 package com.kireyko.movieland.service.impl;
 
 import com.kireyko.movieland.dao.MovieDao;
-import com.kireyko.movieland.entity.Genre;
 import com.kireyko.movieland.entity.Movie;
 import com.kireyko.movieland.service.MovieService;
 import org.springframework.stereotype.Service;
-//import com.trubin.citystore.dao.CityDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

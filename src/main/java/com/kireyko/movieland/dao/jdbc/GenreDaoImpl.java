@@ -28,7 +28,7 @@ public class GenreDaoImpl implements GenreDao{
         long startTime = System.currentTimeMillis();
         List<Genre> genres = namedJdbcTemplate.query(getGenresAllSQL, genreRowMapper);
         LOG.info("Finish query to get genres list from DB. It took {} ms",  System.currentTimeMillis() - startTime);
-        LOG.debug("test debug ");
+        //LOG.debug("test debug ");
         return genres;
     }
 }

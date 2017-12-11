@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import static com.kireyko.movieland.util.JsonJacksonConverter.parseEntityToJson;
 
 @Controller
 @RequestMapping(value = "/genre", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.GET)
@@ -22,9 +23,6 @@ public class GenreController {
     @Autowired
     private GenreService genreService;
 
-    @Autowired
-    private JsonJacksonConverter jsonJacksonConverter;
-
     @RequestMapping
     @ResponseBody
     public ResponseEntity<String> getAll() {
@@ -33,7 +31,7 @@ public class GenreController {
         String genresAllJson = null;
         List<Genre> genres = genreService.getAll();
         if(null !=genres && genres.size()>0){
-            genresAllJson = jsonJacksonConverter.parseEntityToJson(genres);
+            genresAllJson = parseEntityToJson(genres);
         }
         LOG.info("Full list of genres was received. It took {} ms."+System.lineSeparator(), System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(genresAllJson, HttpStatus.OK);

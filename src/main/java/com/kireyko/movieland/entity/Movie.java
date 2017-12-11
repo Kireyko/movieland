@@ -68,7 +68,7 @@ public class Movie {
     public Float getRating() {
         return rating;
     }
-    public void setRaiting(Float rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 

@@ -9,18 +9,13 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-@Service
 public class JsonJacksonConverter {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final static ObjectMapper objectMapper = new ObjectMapper();
 
-    public <T> String parseEntityToJson(T entity) {
-        log.info("Start parsing entity to json {}", entity);
-        long startTime = System.currentTimeMillis();
+    public static <T> String parseEntityToJson(T entity) {
         String entityJson = null;
         try { entityJson = objectMapper.writeValueAsString(entity);  }
         catch (JsonProcessingException e) { e.printStackTrace(); }
-        log.info("Entity {} is received. It took {} ms", entity, System.currentTimeMillis() - startTime);
         return entityJson;
     }
 }

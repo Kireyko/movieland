@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+import static com.kireyko.movieland.util.JsonJacksonConverter.parseEntityToJson;
+
 @Controller
 @RequestMapping(value = "/movie", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.GET)
 public class MovieController {
@@ -23,19 +25,16 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @Autowired
-    private JsonJacksonConverter jsonJacksonConverter;
-
     @RequestMapping
     @ResponseBody
     public ResponseEntity<String> getAll(@RequestParam(required = false) Map<String, String> parameters) {
         LOG.info("Sending request to get list of movies {} ",parameters);
         long startTime = System.currentTimeMillis();
-        String moviesAllJson = null;
+        //String moviesAllJson = null;
         List<Movie> movies = movieService.getAll( parameters);
-        if(null !=movies && movies.size()>0) {
-            moviesAllJson = jsonJacksonConverter.parseEntityToJson(movies);
-        }
+        //if(null !=movies && movies.size()>0) {
+        String moviesAllJson = parseEntityToJson(movies);
+        //}
         LOG.info(" List of movies was received. It took {} ms."+System.lineSeparator(), System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(moviesAllJson, HttpStatus.OK);
     }
@@ -48,7 +47,7 @@ public class MovieController {
         String moviesRandomJson = null;
         List<Movie> movies = movieService.getMoviesRandom();
         if(null !=movies && movies.size()>0){
-            moviesRandomJson = jsonJacksonConverter.parseEntityToJson(movies);
+            moviesRandomJson = parseEntityToJson(movies);
         }
         LOG.info("Random list of movies was received. It took {} ms."+System.lineSeparator(), System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(moviesRandomJson, HttpStatus.OK);
@@ -61,7 +60,7 @@ public class MovieController {
         long startTime = System.currentTimeMillis();
         String movieJson = null;
         Movie movie = movieService.getById(movieId);
-        movieJson = jsonJacksonConverter.parseEntityToJson(movie);
+        movieJson = parseEntityToJson(movie);
         LOG.info("Movie with id {} is received. It took {} ms", movieId, System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(movieJson, HttpStatus.OK);
     }
@@ -73,7 +72,7 @@ public class MovieController {
         long startTime = System.currentTimeMillis();
         String moviesByGenreId = null;
         List<Movie> movie = movieService.getMoviesByGenreId(genreId);
-        moviesByGenreId = jsonJacksonConverter.parseEntityToJson(movie);
+        moviesByGenreId = parseEntityToJson(movie);
         LOG.info("Movie list for genre with id {} was received. It took {} ms", genreId, System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(moviesByGenreId, HttpStatus.OK);
     }
