@@ -6,15 +6,15 @@ public class Movie {
     private int id;
     private String nameRussian;
     private String nameNative;
-    private int year;
+    private int yearOfRelease;
     private Float rating;
     private Float price;
 
     private String description;
-    private String poster;
+    private String picturePath;
 
-    private List<Country> country;
-    private List<Genre> genre;
+    private List<Country> countries;
+    private List<Genre> genres;
 
     public int getId() {
         return id;
@@ -37,25 +37,25 @@ public class Movie {
         this.nameNative = nameNative;
     }
 
-    public int getYear() {
-        return year;
+    public int getYearOfRelease() {
+        return yearOfRelease;
     }
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public List<Country> getCountry() {
-        return this.country;
-    }
-    public void setCountry(List<Country> country) {
-        this.country=country;
+    public void setYearOfRelease(int yearOfRelease) {
+        this.yearOfRelease = yearOfRelease;
     }
 
-    public List<Genre> getGenre() {
-        return this.genre;
+    public List<Country> getCountries() {
+        return this.countries;
     }
-    public void setGenre(List<Genre>  genre) {
-        this.genre=genre;
+    public void setCountries(List<Country> countries) {
+        this.countries=countries;
+    }
+
+    public List<Genre> getGenres() {
+        return this.genres;
+    }
+    public void setGenres(List<Genre>  genres) {
+        this.genres=genres;
     }
 
     public String getDescription() {
@@ -79,8 +79,8 @@ public class Movie {
         this.price = price;
     }
 
-    public String getPoster() {return poster; }
-    public void setPoster(String poster) {this.poster = poster; }
+    public String getPicturePath() {return picturePath; }
+    public void setPicturePath(String picturePath) {this.picturePath = picturePath; }
 
     @Override
     public String toString() {
@@ -88,15 +88,15 @@ public class Movie {
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +
-                ", year=" + year +
-                ", country='" + country + '\'' +
-                ", description='" + description + '\'' +
+                ", yearOfRelease=" + yearOfRelease +
                 ", rating=" + rating +
                 ", price=" + price +
+                ", description='" + description + '\'' +
+                ", picturePath='" + picturePath + '\'' +
+                ", country=" + countries +
+                ", genre=" + genres +
                 '}';
     }
-
-
 }
 
 

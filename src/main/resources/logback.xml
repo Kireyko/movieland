@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <property resource="application.properties" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-
-            <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
-            </Pattern>
-
+            <charset>UTF-8</charset>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</Pattern>
         </layout>
     </appender>
 
-    <logger name="com.kireyko.movieland.controller" level="debug"
-            additivity="false">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.path}/movieland.log </file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>
+            <pattern>%d %-5level [%thread] %X{requestId} %X{email} %logger{0}: %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logging.path}/archive/movieland-%d{yyyy-MM-dd}.log.%i</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.kireyko.movieland" level="DEBUG" additivity="true">
+        <appender-ref ref="FILE" />
         <appender-ref ref="STDOUT" />
     </logger>
 
-    <root level="error">
+    <root level="TRACE">
         <appender-ref ref="STDOUT" />
     </root>
 
